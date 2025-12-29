@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISD - Учет серий ГП</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .project-info {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-details h2 {
+            color: #1a237e;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .project-details p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            color: #1a237e;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #e8eaf6;
+            padding-bottom: 0.5rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .stakeholders-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .stakeholders-table th,
+        .stakeholders-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .stakeholders-table th {
+            background-color: #e8eaf6;
+            color: #1a237e;
+            font-weight: 600;
+        }
+
+        .stakeholders-table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .project-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .project-btn {
+            padding: 12px 24px;
+            background-color: #e8eaf6;
+            border: none;
+            border-radius: 6px;
+            color: #1a237e;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .project-btn:hover {
+            background-color: #c5cae9;
+            transform: translateY(-2px);
+        }
+
+        .project-btn.active {
+            background-color: #1a237e;
+            color: white;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .tab-pane h4 {
+            color: #283593;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .tab-pane ul {
+            list-style-type: none;
+            padding-left: 1rem;
+        }
+
+        .tab-pane li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .tab-pane li:before {
+            content: "•";
+            color: #1a237e;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 2rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .project-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-buttons {
+                flex-direction: column;
+            }
+            
+            .project-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ISD - Учет серий ГП</h1>
+            <p>Информационная система учета серий готовой продукции для фармацевтического производства</p>
+        </header>
+
+        <main>
+            <section class="project-info">
+                <div class="project-image">
+                    <!-- Можно использовать изображение фармацевтического производства -->
+                    <div style="width: 300px; height: 200px; background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #1a237e; font-weight: bold; text-align: center; padding: 20px;">
+                        Фармацевтическое производство<br>Система учета серий
+                    </div>
+                </div>
+                <div class="project-details">
+                    <h2>Тема: Автоматизированная система учета серий готовой продукции</h2>
+                    <p>Комплексное решение для управления производственными сериями лекарственных препаратов на фармацевтическом предприятии. Система обеспечивает полную прослеживаемость, контроль качества и автоматизацию процессов учета в соответствии с требованиями GMP.</p>
+                </div>
+            </section>
+
+            <section class="stakeholders">
+                <h3>Stakeholders (Заинтересованные лица)</h3>
+                <div class="table-container">
+                    <table class="stakeholders-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Роль / Должность</th>
+                                <th>Уровень интереса</th>
+                                <th>Проблема / Ожидание</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Директор по производству</td>
+                                <td>H (Высокий)</td>
+                                <td>Требуется полная прослеживаемость серий и контроль соблюдения GMP</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Начальник ОТК</td>
+                                <td>H (Высокий)</td>
+                                <td>Необходима автоматизация контроля качества и оперативное выявление отклонений</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Технолог производства</td>
+                                <td>M (Средний)</td>
+                                <td>Нужен удобный интерфейс для управления сериями и отслеживания статусов</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Аппаратчик</td>
+                                <td>M (Средний)</td>
+                                <td>Требуется простой способ ввода параметров операций и получения заданий</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Руководитель QA</td>
+                                <td>H (Высокий)</td>
+                                <td>Важна автоматизация документооборота и соответствие регуляторным требованиям</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Регуляторный инспектор</td>
+                                <td>L (Низкий)</td>
+                                <td>Требуется быстрый доступ к полным данным по сериям при проверках</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="projects">
+                <h3>Элементы проекта</h3>
+                <div class="project-buttons">
+                    <button class="project-btn active" data-tab="needs">1. Потребности</button>
+                    <button class="project-btn" data-tab="solutions">2. Решения</button>
+                    <button class="project-btn" data-tab="objectives">3. Бизнес-цели</button>
+                    <button class="project-btn" data-tab="criteria">4. Критерии успеха</button>
+                    <button class="project-btn" data-tab="target">5. Целевая аудитория</button>
+                </div>
+                
+                <div class="tab-content">
+                    <div id="needs" class="tab-pane active">
+                        <h4>Потребности (Needs)</h4>
+                        <ul>
+                            <li>Автоматизация учета производственных серий и исключение ручного ведения документации</li>
+                            <li>Обеспечение полной прослеживаемости от сырья до готового продукта (Traceability)</li>
+                            <li>Контроль соблюдения технологических параметров в реальном времени</li>
+                            <li>Автоматическое формирование электронного паспорта серии (Electronic Batch Record)</li>
+                            <li>Интеграция с лабораторными системами для оперативного ввода результатов анализов</li>
+                            <li>Управление отклонениями и корректирующими действиями (Deviation/CAPA)</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="solutions" class="tab-pane">
+                        <h4>Решения (Solutions)</h4>
+                        <ul>
+                            <li>Разработка модуля управления производственными сериями с уникальной нумерацией</li>
+                            <li>Создание системы резервирования сырья и отслеживания его использования в сериях</li>
+                            <li>Внедрение терминалов ввода данных на производственных линиях</li>
+                            <li>Разработка веб-интерфейса для технологов с dashboard'ом статусов серий</li>
+                            <li>Интеграция с SCADA-системами для автоматического сбора параметров процесса</li>
+                            <li>Создание модуля отчетности для формирования документов по требованиям GMP</li>
+                            <li>Реализация системы электронных подписей и аудиторского следа</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="objectives" class="tab-pane">
+                        <h4>Бизнес-цели (Business Objectives)</h4>
+                        <ul>
+                            <li>Сокращение времени на формирование паспорта серии на 80% в течение 6 месяцев</li>
+                            <li>Достижение 100% прослеживаемости по всем выпускаемым сериям</li>
+                            <li>Сокращение количества ошибок при передаче данных между отделами на 95%</li>
+                            <li>Ускорение процесса расследования отклонений на 70%</li>
+                            <li>Обеспечение соответствия требованиям GMP и подготовка к международным инспекциям</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="criteria" class="tab-pane">
+                        <h4>Критерии успеха (Success Criteria)</h4>
+                        <ul>
+                            <li>Система обрабатывает 100% выпускаемых серий лекарственных препаратов</li>
+                            <li>95% пользователей подтверждают удобство интерфейса и сокращение рутинных операций</li>
+                            <li>Время от завершения производства до формирования паспорта серии — менее 1 часа</li>
+                            <li>Количество "потерянных" или неполных записей о сериях равно 0</li>
+                            <li>Система проходит внутренний аудит на соответствие GMP требованиям</li>
+                            <li>Обеспечен полный аудиторский след всех операций с данными</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="target" class="tab-pane">
+                        <h4>Целевая аудитория системы (Target Group)</h4>
+                        <ul>
+                            <li><strong>Фармацевтические производства</strong> с собственным выпуском готовых лекарственных форм</li>
+                            <li><strong>Производители стерильных препаратов</strong>, требующих особых условий контроля</li>
+                            <li><strong>Биотехнологические компании</strong> с процессами, требующими строгой валидации</li>
+                            <li><strong>Контрактные производители</strong> (CMO), работающие по принципам cGMP</li>
+                            <li><strong>Предприятия медицинской продукции</strong> с требованиями к прослеживаемости</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Потеряева Валерия, группа 252. ISD Project: Pharmaceutical Batch Record System</p>
+            <p>Тема: Проектирование информационной системы учета серий готовой продукции</p>
+            <p>Предприятие: ООО «Онко Солюшнс»</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.project-btn');
+            const panes = document.querySelectorAll('.tab-pane');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    panes.forEach(pane => pane.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
